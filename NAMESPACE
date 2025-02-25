@@ -1,3 +1,5 @@
 exportPattern("^[[:alpha:]]+")
 importFrom(Rcpp, evalCpp)
 useDynLib(TakuzuKL, .registration = TRUE)
+
+
