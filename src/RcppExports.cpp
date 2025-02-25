@@ -10,6 +10,17 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// generateTakuzuGrid
+IntegerMatrix generateTakuzuGrid(int size);
+RcppExport SEXP _TakuzuKL_generateTakuzuGrid(SEXP sizeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type size(sizeSEXP);
+    rcpp_result_gen = Rcpp::wrap(generateTakuzuGrid(size));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_hello
 List rcpp_hello();
 RcppExport SEXP _TakuzuKL_rcpp_hello() {
@@ -22,6 +33,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_TakuzuKL_generateTakuzuGrid", (DL_FUNC) &_TakuzuKL_generateTakuzuGrid, 1},
     {"_TakuzuKL_rcpp_hello", (DL_FUNC) &_TakuzuKL_rcpp_hello, 0},
     {NULL, NULL, 0}
 };
