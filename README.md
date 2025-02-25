@@ -4,8 +4,8 @@
         height="500" 
         style="display: block; margin: 0 auto;" />
 
-Welcome to our second semester R project!
-We are in first year of a **Master**'s degree and we need to create a Takuzu (also known as Binairo) game interface using the [Shiny library](https://github.com/rstudio/shiny) available in **RStudio** IDE.
+Welcome to our second-semester R project!
+We're in first year of a **Master**'s program and we're creating a Takuzu game interface (also known as Binairo) using the [Shiny library](https://github.com/rstudio/shiny) available in the **RStudio** IDE.
 
 ---
 
