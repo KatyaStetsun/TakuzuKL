@@ -1,3 +1,5 @@
 exportPattern("^[[:alpha:]]+")
+export(myFunction, anotherFunction)  # If you want to explicitly specify exported functions
 importFrom(Rcpp, evalCpp)
 useDynLib(TakuzuKL, .registration = TRUE)
+

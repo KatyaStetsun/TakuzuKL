@@ -1,12 +1,11 @@
 {
     "args": [
-        "-IC:/Users/stecu/AppData/Local/R/win-library/4.3/Rcpp/include",
         "-DEIGEN_DONT_VECTORIZE",
         "-nostdinc"
     ],
-    "pch": "Rcpp",
+    "pch": "",
     "is_cpp": true,
-    "hash": "1740507279",
+    "hash": "1740508801",
     "compiler": "14695981039346656037",
     "rversion": "4.3.0",
     "dbversion": 4

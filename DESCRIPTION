@@ -1,18 +1,17 @@
 Package: TakuzuKL
-Type: Package
-Title: What the Package Does (Title Case)
+Title: A Shiny App for Takuzu Game
 Version: 0.1.0
-Authors@R: c(
-    person(
-      "Jane", "Doe",
-      email = "jane@example.com",
-      role = c("aut", "cre")
-    )
-  )
-Description: More about what it does (maybe more than one line).
-    Continuation lines should be indented.
-License: What license is it under?
+Authors@R: person("Kateryna Stetsun", 
+             email = "kateryna.stetsun@etu.umontpellier.fr", 
+              role = c("aut", "cre")),
+            person("Laura Cletz", 
+              email = "laura@cletz.fr", 
+              role = c("aut", "cre"))
+Maintainer: Kateryna Stetsun <kateryna.stetsun@etu.umontpellier.fr>
+Description: A Shiny app to play the Takuzu game, developed as part of a university project.
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
-Imports: Rcpp (>= 1.0.13-1)
-LinkingTo: Rcpp
+Depends: R (>= 3.5.0), shiny, Rcpp
+
+
