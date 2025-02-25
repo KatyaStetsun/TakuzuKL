@@ -41,7 +41,7 @@ install.packages(c('shiny', 'shinyjs', 'Rcpp'))
 Our team counts two students:
 - [**Laura CLETZ**](https://github.com/lcletz)
 - [**Kateryna STETSUN**](https://github.com/KatyaStetsun)
-- 
+ 
 This R programming course and project is supervised by [**Jean-Michel MARIN**](https://imag.umontpellier.fr/~marin/).
 
 ---
