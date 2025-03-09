@@ -5,3 +5,7 @@ generateTakuzuGrid <- function(size) {
     .Call(`_TakuzuKL_generateTakuzuGrid`, size)
 }
 
+rcpp_hello <- function() {
+    .Call(`_TakuzuKL_rcpp_hello`)
+}
+
