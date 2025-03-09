@@ -1,5 +1,6 @@
 #include <Rcpp.h>
-#include <algorithm>
+#include <map>
+#include <string>
 #include <random>
 
 using namespace Rcpp;
@@ -29,18 +30,49 @@ bool is_valid(const IntegerMatrix &board, int row, int col, int value) {
   return true;
 }
 
+// Function to get difficulty level parameters
+// [[Rcpp::export]]
+List get_difficulty_params(std::string difficulty) {
+  // Define difficulty levels
+  std::map<std::string, List> levels = {
+    {"easy", List::create(
+        _["fill_percentage"] = 0.5,
+        _["chaotic"] = false
+    )},
+    {"medium", List::create(
+        _["fill_percentage"] = 0.4,
+        _["chaotic"] = true
+    )},
+    {"hard", List::create(
+        _["fill_percentage"] = 0.3,
+        _["chaotic"] = true
+    )},
+    {"expert", List::create(
+        _["fill_percentage"] = 0.2,
+        _["chaotic"] = true
+    )}
+  };
+
+  // Check if the difficulty level is valid
+  if (levels.find(difficulty) == levels.end()) {
+    stop("Invalid difficulty level. Choose from: easy, medium, hard, expert.");
+  }
+
+  // Return parameters for the selected difficulty
+  return levels[difficulty];
+}
+
 // Function to generate a partially filled table
 // [[Rcpp::export]]
 IntegerMatrix generate_takuzu(int n, double fill_percentage, bool chaotic = true) {
   IntegerMatrix board(n, n);
-  std::fill(board.begin(), board.end(), NA_INTEGER); // putting NA
+  std::fill(board.begin(), board.end(), NA_INTEGER); // Fill with NA
 
   // Number of cells to fill
   int cells_to_fill = round(n * n * fill_percentage);
 
   // Random number generator
-  std::random_device rd;
-  std::mt19937 gen(rd());
+  std::mt19937 gen(42); // Fixed seed for reproducibility
   std::uniform_int_distribution<> dis(0, n - 1);
 
   // Fill the cells
@@ -60,7 +92,7 @@ IntegerMatrix generate_takuzu(int n, double fill_percentage, bool chaotic = true
       if (is_valid(board, row, col, value)) {
         break;
       } else {
-        // If it violates, we roll back
+        // If it violates, roll back
         board(row, col) = NA_INTEGER;
       }
     }

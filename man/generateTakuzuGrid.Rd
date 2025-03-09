@@ -4,13 +4,15 @@
 \alias{generateTakuzuGrid}
 \title{Generating Takuzu Grid}
 \usage{
-generateTakuzuGrid(size)
+generateTakuzuGrid(size = 8, difficulty = "easy")
 }
 \arguments{
-\item{size}{Grid size (eg 8 for 8x8)}
+\item{size}{Grid size (e.g., 6 for 6x6). Default is 8x8.}
+
+\item{difficulty}{Level of difficulty ("easy", "medium", "hard", "expert"). Default is "easy".}
 }
 \value{
-Generated Takuzu Mesh Matrix
+Generated Takuzu grid as a matrix
 }
 \description{
 Generating Takuzu Grid

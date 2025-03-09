@@ -1,0 +1,68 @@
+#include <Rcpp.h>
+using namespace Rcpp;
+
+// Функция для проверки, что строка и столбец сбалансированы (имеют одинаковое количество 0 и 1)
+// [[Rcpp::export]]
+bool is_balanced(NumericMatrix board, int size) {
+  for (int i = 0; i < size; i++) {
+    int count_0_row = 0, count_1_row = 0;
+    int count_0_col = 0, count_1_col = 0;
+
+    // Проверка строки и столбца
+    for (int j = 0; j < size; j++) {
+      if (board(i, j) == 0) {
+        count_0_row++;
+      } else {
+        count_1_row++;
+      }
+
+      if (board(j, i) == 0) {
+        count_0_col++;
+      } else {
+        count_1_col++;
+      }
+    }
+
+    if (count_0_row != count_1_row || count_0_col != count_1_col) {
+      return false;
+    }
+  }
+  return true;
+}
+
+// Функция для проверки правил на два одинаковых числа подряд
+// [[Rcpp::export]]
+bool check_consecutive(NumericMatrix board, int size) {
+  // Проверка горизонтальных и вертикальных последовательностей
+  for (int i = 0; i < size; i++) {
+    for (int j = 0; j < size - 1; j++) {
+      if (board(i, j) == board(i, j+1) || board(j, i) == board(j+1, i)) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+// Функция для генерации валидного поля Takuzu
+// [[Rcpp::export]]
+NumericMatrix generate_valid_takuzu(int size) {
+  NumericMatrix board(size, size);
+
+  bool valid = false;
+  while (!valid) {
+    // Заполнение случайными 0 и 1
+    for (int i = 0; i < size; i++) {
+      for (int j = 0; j < size; j++) {
+        board(i, j) = (rand() % 2); // Случайное значение 0 или 1
+      }
+    }
+
+    // Проверяем, что поле сбалансировано и не содержит запрещенных последовательностей
+    if (is_balanced(board, size) && check_consecutive(board, size)) {
+      valid = true;
+    }
+  }
+
+  return board;
+}

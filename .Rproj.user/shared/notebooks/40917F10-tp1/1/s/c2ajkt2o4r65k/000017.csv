@@ -1,0 +1,3 @@
+"0","set.seed(123)"
+"0","num_traj_s <- 3"
+"0","trajectories <- replicate(num_traj_s, pi_1(), simplify = FALSE)"

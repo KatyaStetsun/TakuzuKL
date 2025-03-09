@@ -1,30 +1,28 @@
+#' Get Difficulty Level Parameters
+#'
+#' This function retrieves the parameters for a given difficulty level.
+#'
+#' @param difficulty A string indicating the difficulty level ("easy", "medium", "hard", "expert").
+#' @return A list containing the fill percentage and chaotic flag.
+#' @export
+get_difficulty_params <- function(difficulty) {
+  .Call(`_TakuzuKL_get_difficulty_params`, difficulty)
+}
+
 #' Generating Takuzu Grid
 #'
-#' @param size Grid size (e.g., 8 for 8x8)
-#' @param difficulty Level of difficulty ("easy", "medium", "hard", "expert")
+#' @param size Grid size (e.g., 6 for 6x6). Default is 8x8.
+#' @param difficulty Level of difficulty ("easy", "medium", "hard", "expert"). Default is "easy".
 #' @return Generated Takuzu grid as a matrix
 #' @export
-generateTakuzuGrid <- function(size, difficulty = "easy") {
+generateTakuzuGrid <- function(size = 8, difficulty = "easy") {
   # Check for even size
   if (size %% 2 != 0) {
     stop("Grid size must be even!")
   }
 
-  # Difficulty level parameters
-  levels <- list(
-    easy = list(fill_percentage = 0.5, chaotic = FALSE),
-    medium = list(fill_percentage = 0.4, chaotic = TRUE),
-    hard = list(fill_percentage = 0.3, chaotic = TRUE),
-    expert = list(fill_percentage = 0.2, chaotic = TRUE)
-  )
-
-  # Checking the correctness of the difficulty level
-  if (!difficulty %in% names(levels)) {
-    stop("Invalid difficulty level. Choose from: easy, medium, hard, expert.")
-  }
-
   # Get parameters for the selected difficulty level
-  params <- levels[[difficulty]]
+  params <- get_difficulty_params(difficulty)
 
   # Generate table using Rcpp function
   grid <- generate_takuzu(size, params$fill_percentage, params$chaotic)

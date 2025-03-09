@@ -10,32 +10,34 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// generateTakuzuGrid
-IntegerMatrix generateTakuzuGrid(int size);
-RcppExport SEXP _TakuzuKL_generateTakuzuGrid(SEXP sizeSEXP) {
+// get_difficulty_params
+List get_difficulty_params(std::string difficulty);
+RcppExport SEXP _TakuzuKL_get_difficulty_params(SEXP difficultySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type size(sizeSEXP);
-    rcpp_result_gen = Rcpp::wrap(generateTakuzuGrid(size));
+    Rcpp::traits::input_parameter< std::string >::type difficulty(difficultySEXP);
+    rcpp_result_gen = Rcpp::wrap(get_difficulty_params(difficulty));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_hello
-List rcpp_hello();
-RcppExport SEXP _TakuzuKL_rcpp_hello() {
+// generate_takuzu
+IntegerMatrix generate_takuzu(int n, double fill_percentage, bool chaotic);
+RcppExport SEXP _TakuzuKL_generate_takuzu(SEXP nSEXP, SEXP fill_percentageSEXP, SEXP chaoticSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type size(sizeSEXP);
-    rcpp_result_gen = Rcpp::wrap(generateTakuzuGrid(size));
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< double >::type fill_percentage(fill_percentageSEXP);
+    Rcpp::traits::input_parameter< bool >::type chaotic(chaoticSEXP);
+    rcpp_result_gen = Rcpp::wrap(generate_takuzu(n, fill_percentage, chaotic));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_TakuzuKL_generateTakuzuGrid", (DL_FUNC) &_TakuzuKL_generateTakuzuGrid, 1},
-    {"_TakuzuKL_rcpp_hello", (DL_FUNC) &_TakuzuKL_rcpp_hello, 0},
+    {"_TakuzuKL_get_difficulty_params", (DL_FUNC) &_TakuzuKL_get_difficulty_params, 1},
+    {"_TakuzuKL_generate_takuzu", (DL_FUNC) &_TakuzuKL_generate_takuzu, 3},
     {NULL, NULL, 0}
 };
 

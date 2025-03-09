@@ -1,0 +1,6 @@
+sourceCpp("src/Takuzu.cpp")
+library(Rcpp)
+sourceCpp("src/Takuzu.cpp")
+sourceCpp('C:/Users/stecu/OneDrive/Документы/UMI/S8/Rprogrammation/TakuzuKL/src/Takuzu.cpp')
+install.packages("Rcpp")
+library(Rcpp)
