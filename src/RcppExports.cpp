@@ -27,7 +27,8 @@ RcppExport SEXP _TakuzuKL_rcpp_hello() {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(rcpp_hello());
+    Rcpp::traits::input_parameter< int >::type size(sizeSEXP);
+    rcpp_result_gen = Rcpp::wrap(generateTakuzuGrid(size));
     return rcpp_result_gen;
 END_RCPP
 }
