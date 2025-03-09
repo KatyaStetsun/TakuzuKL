@@ -1,6 +1,6 @@
-^.*\.Rproj$
-^\.Rproj\.user$
-^\.Rhistory$
-^\.RData$
-^inst/app/\.Rhistory$
-^inst/app/\.RData$
+.Rproj
+.Rproj.user
+.Rhistory
+.RData
+inst/app/.Rhistory
+inst/app/.RData
