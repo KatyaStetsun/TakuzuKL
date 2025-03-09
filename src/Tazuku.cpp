@@ -4,11 +4,11 @@
 
 using namespace Rcpp;
 
-// Функция для проверки правил Takuzu
+// Function for checking Takuzu rules
 bool is_valid(const IntegerMatrix &board, int row, int col, int value) {
   int n = board.nrow();
 
-  // Проверка на количество 0 и 1 в строке и столбце
+  // Check for number of 0 and 1 in row and column
   int count_row = 0, count_col = 0;
   for (int i = 0; i < n; i++) {
     if (board(row, i) == value) count_row++;
@@ -18,7 +18,7 @@ bool is_valid(const IntegerMatrix &board, int row, int col, int value) {
     return false;
   }
 
-  // Проверка на три одинаковых значения подряд
+  // Check for three identical values in a row
   if (row >= 2 && board(row-1, col) == value && board(row-2, col) == value) {
     return false;
   }
@@ -29,38 +29,38 @@ bool is_valid(const IntegerMatrix &board, int row, int col, int value) {
   return true;
 }
 
-// Функция для генерации частично заполненной таблицы
+// Function to generate a partially filled table
 // [[Rcpp::export]]
 IntegerMatrix generate_takuzu(int n, double fill_percentage, bool chaotic = true) {
   IntegerMatrix board(n, n);
-  std::fill(board.begin(), board.end(), NA_INTEGER); // Заполняем таблицу NA
+  std::fill(board.begin(), board.end(), NA_INTEGER); // putting NA
 
-  // Количество клеток для заполнения
+  // Number of cells to fill
   int cells_to_fill = round(n * n * fill_percentage);
 
-  // Генератор случайных чисел
+  // Random number generator
   std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_int_distribution<> dis(0, n - 1);
 
-  // Заполняем клетки
+  // Fill the cells
   for (int i = 0; i < cells_to_fill; i++) {
     while (true) {
       int row = dis(gen);
       int col = dis(gen);
 
-      // Если клетка уже заполнена, пропускаем
+      // If the cell is already filled, skip
       if (board(row, col) != NA_INTEGER) continue;
 
-      // Выбираем значение (0 или 1)
-      int value = (chaotic) ? dis(gen) % 2 : (i % 2); // Хаотично или структурированно
+      // Select a value (0 or 1)
+      int value = (chaotic) ? dis(gen) % 2 : (i % 2); // Chaotic or structured
 
-      // Проверяем, что значение не нарушает правила
+      // Check that the value does not violate the rules
       board(row, col) = value;
       if (is_valid(board, row, col, value)) {
         break;
       } else {
-        // Если нарушает, откатываем
+        // If it violates, we roll back
         board(row, col) = NA_INTEGER;
       }
     }

@@ -1,9 +1,9 @@
 library(testthat)
 source("D:/TakuzuKL/R/Tazuku.R")
 
-# Тестирование функции is_valid
+# TEST is_valid
 test_that("is_valid works correctly", {
-  # Корректная таблица
+  # Correct table
   valid_grid <- matrix(
     c(1, 0, NA, 0, NA, 1, NA, 1,
       0, 1, 1, NA, 0, NA, 1, NA,
@@ -17,7 +17,7 @@ test_that("is_valid works correctly", {
   )
   expect_true(is_valid(valid_grid))
 
-  # Таблица с тремя одинаковыми значениями подряд
+  # Table with three identical values in a row
   invalid_grid <- matrix(
     c(1, 1, 1, NA, NA, NA, NA, NA,
       NA, NA, NA, NA, NA, NA, NA, NA,
@@ -31,7 +31,7 @@ test_that("is_valid works correctly", {
   )
   expect_false(is_valid(invalid_grid))
 
-  # Таблица с неравным количеством 0 и 1
+  # Table with unequal number of 0 and 1
   invalid_grid2 <- matrix(
     c(1, 1, 1, 1, 1, 1, 1, 1,
       0, 0, 0, 0, 0, 0, 0, 0,

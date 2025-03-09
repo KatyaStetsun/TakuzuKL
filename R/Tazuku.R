@@ -5,12 +5,12 @@
 #' @return Generated Takuzu grid as a matrix
 #' @export
 generateTakuzuGrid <- function(size, difficulty = "easy") {
-  # Проверка на четность размера
+  # Check for even size
   if (size %% 2 != 0) {
     stop("Grid size must be even!")
   }
 
-  # Параметры уровней сложности
+  # Difficulty level parameters
   levels <- list(
     easy = list(fill_percentage = 0.5, chaotic = FALSE),
     medium = list(fill_percentage = 0.4, chaotic = TRUE),
@@ -18,23 +18,16 @@ generateTakuzuGrid <- function(size, difficulty = "easy") {
     expert = list(fill_percentage = 0.2, chaotic = TRUE)
   )
 
-  # Проверка корректности уровня сложности
+  # Checking the correctness of the difficulty level
   if (!difficulty %in% names(levels)) {
     stop("Invalid difficulty level. Choose from: easy, medium, hard, expert.")
   }
 
-  # Получаем параметры для выбранного уровня сложности
+  # Get parameters for the selected difficulty level
   params <- levels[[difficulty]]
 
-  # Генерация таблицы с использованием Rcpp-функции
+  # Generate table using Rcpp function
   grid <- generate_takuzu(size, params$fill_percentage, params$chaotic)
 
   return(grid)
-}
-=======
-#' @param size Grid size (eg 8 for 8x8)
-#' @return Generated Takuzu Mesh Matrix
-#' @export
-generateTakuzuGrid <- function(size) {
-  .Call(`_TakuzuKL_generateTakuzuGrid`, size)
 }

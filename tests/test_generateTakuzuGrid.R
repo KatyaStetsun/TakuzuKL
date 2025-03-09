@@ -3,29 +3,29 @@ library(Rcpp)
 sourceCpp("D:/TakuzuKL/src/Takuzu.cpp")
 source("D:/TakuzuKL/R/Tazuku.R")
 
-# Тестирование функции generateTakuzuGrid
+# test generateTakuzuGrid
 test_that("generateTakuzuGrid works correctly", {
-  # Проверка, что функция возвращает матрицу
+  # Check that the function returns a matrix
   grid <- generateTakuzuGrid(8, difficulty = "easy")
   expect_true(is.matrix(grid))
   expect_equal(dim(grid), c(8, 8))
 
-  # Проверка, что таблица соответствует правилам Takuzu
+  # Check that the table complies with Takuzu rules
   expect_true(is_valid(grid))
 
-  # Проверка, что уровень сложности влияет на заполнение
+  # Check that the difficulty level affects the filling
   grid_easy <- generateTakuzuGrid(8, difficulty = "easy")
   grid_expert <- generateTakuzuGrid(8, difficulty = "expert")
 
-  # В easy больше заполненных клеток, чем в expert
+  # Easy has more filled cells than expert
   expect_gt(sum(!is.na(grid_easy)), sum(!is.na(grid_expert)))
 })
 
-# Проверка обработки ошибок
+# Check error handling
 test_that("generateTakuzuGrid handles errors correctly", {
-  # Нечётный размер таблицы
+  # Odd table size
   expect_error(generateTakuzuGrid(7, difficulty = "easy"))
 
-  # Некорректный уровень сложности
+  # Incorrect difficulty level
   expect_error(generateTakuzuGrid(8, difficulty = "invalid"))
 })
