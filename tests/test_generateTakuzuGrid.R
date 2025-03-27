@@ -1,7 +1,6 @@
 library(testthat)
 library(Rcpp)
-sourceCpp("D:/TakuzuKL/src/Takuzu.cpp")
-source("D:/TakuzuKL/R/Tazuku.R")
+library(TakuzuKL)
 
 # test generateTakuzuGrid
 test_that("generateTakuzuGrid works correctly", {

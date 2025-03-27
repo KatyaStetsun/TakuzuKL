@@ -1,5 +1,5 @@
 library(testthat)
-source("D:/TakuzuKL/R/Tazuku.R")
+library(TakuzuKL)
 
 # TEST is_valid
 test_that("is_valid works correctly", {

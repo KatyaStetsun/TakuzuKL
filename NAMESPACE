@@ -1,5 +1,4 @@
-exportPattern("^[[:alpha:]]+")
-importFrom(Rcpp, evalCpp)
 useDynLib(TakuzuKL, .registration = TRUE)
-
-
+importFrom(Rcpp, evalCpp)
+export(dl_csv)
+export(hide_by_difficulty)
