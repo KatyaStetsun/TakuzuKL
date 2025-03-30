@@ -1,7 +1,7 @@
 # This function is required to download the valid grids from the distant folder on Zenodo.
 # This way, there is no need to run the Rcpp files "row_generator.cpp", "grid_generator.cpp",
 # "bigger_grid_generator.cpp".
-
+#' @export
 library(readr)
 dl_csv <- function(){
   grids_4 <- as.matrix(read_csv("https://zenodo.org/records/15037448/files/valid_grid_4x4.csv?download=1", col_names = FALSE))

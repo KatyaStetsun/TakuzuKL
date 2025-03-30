@@ -2,7 +2,7 @@ library(shiny)
 library(shinyjs)
 library(TakuzuKL)
 
-#grids <- dl_csv()
+grids <- dl_csv()
 
 ui <- fluidPage(
   useShinyjs(),
@@ -108,13 +108,17 @@ server <- function(input, output, session) {
 
     game_data$solution <- chosen_grid
     difficulty_level <- switch(input$difficulty,
-                               "Easy" = 1,
-                               "Medium" = 2,
-                               "Hard" = 3)
+                               "Easy" = 0.25,
+                               "Medium" = 0.5,
+                               "Hard" = 0.75)
     game_data$grid <- hide_by_difficulty(difficulty_level, chosen_grid)
     game_data$original_grid <- game_data$grid
 
     shinyjs::hide("choose_ui")
+
+    print(str(game_data$grid))
+    print(str(game_data$original_grid))
+
     shinyjs::show("game_ui")
   })
 

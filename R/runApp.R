@@ -4,7 +4,7 @@
 #'
 #' @export
 runTakuzuApp <- function() {
-  appDir <- system.file("app", package = "TakuzuKL")
+  appDir <- system.file(package = "TakuzuKL")
   if (appDir == "") {
     stop("Could not find the Shiny app. Try re-installing the package.", call. = FALSE)
   }
