@@ -177,6 +177,7 @@ server <- function(input, output, session) {
   output$victory_ui <- renderUI({
     req(game_data$grid)
     tagList(
+      img(src = "victory.png", class = "victory-img"),
       div(class = "victory-message",
           h3("Congratulations! You solved the puzzle!"),
           actionButton("return_to_menu_victory", "RETURN TO MENU", class = "btn btn-custom")

@@ -98,6 +98,18 @@ body {
   position: relative;
   z-index: 10;
 }
+.victory-img {
+  width: 100%;
+  max-width: 600px;
+  display: block;
+  margin: auto;
+}
+.victory-message {
+  text-align: center;
+  font-weight: bold;
+  color: black;
+  font-size: 30px;
+}
 .cell-fixed {
   background-color: #ADD8E6; /* Light blue */
   color: white;
