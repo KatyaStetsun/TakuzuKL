@@ -40,7 +40,7 @@ server <- function(input, output, session) {
     tagList(
       div(class = "rules-container",
           img(src = "rules.png", class = "rules-img"),
-          actionButton("return_from_rules", "RETURN", class = "btn btn-custom")
+          actionButton("return_from_rules", "RETURN", class = "btn btn-custom rules-button")
       )
     )
   })
@@ -203,11 +203,11 @@ server <- function(input, output, session) {
     tagList(
       div(class = "rules-container",
           img(src = "victory.png", class = "rules-img"),
-          actionButton("return_to_menu_victory", "RETURN TO MENU", class = "btn btn-custom")
+          div("Congratulations! You solved the puzzle!", class = "victory-message"),
+          actionButton("return_to_menu_victory", "RETURN TO MENU", class = "btn btn-custom rules-button")
       )
-      )
-    }
-  )
+    )
+  })
 
   # Handle UI Navigation
   shinyjs::hide("choose_ui")
@@ -247,7 +247,6 @@ server <- function(input, output, session) {
 
 
   observeEvent(input$return_to_menu, {
-    #resetTimer("timer")
     shinyjs::hide("game_ui")
     shinyjs::show("choose_ui")
   })

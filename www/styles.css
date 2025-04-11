@@ -61,26 +61,26 @@ body {
 
 .rules-container {
   position: absolute;
-  top: 20%;
+  top: 5%;
   left: 0%;
-  width: 90%;
-  height: 70%;
+  width: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   z-index: 1;
 }
 .rules-img {
   width: 220%;
   max-width: 1300px;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
   margin-top: -80px;
-  margin-bottom: 5px;
+  margin-bottom: -100px;
   z-index: 0;
 }
-.rules-container button {
+.rules-button {
+  margin-top: 5px;
   position: relative;
   z-index: 3;
 }
@@ -188,3 +188,15 @@ body {
 .modal-footer .btn:hover {
   background-color: #ff1493;
 }
+
+.victory-message {
+  font-size: 28px;
+  font-weight: bold;
+  color: #ff1493;
+  margin-top: -30px;
+  margin-bottom: 10 px;
+  z-index: 2;
+  position: relative;
+  text-align: center;
+}
+
