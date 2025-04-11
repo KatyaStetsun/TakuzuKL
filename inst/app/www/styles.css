@@ -1,3 +1,7 @@
+audio {
+  display: none;
+}
+
 body {
   background-image: url('background.png');
   background-size: cover;
@@ -44,6 +48,71 @@ body {
 .btn-custom:focus {
   outline: none;
 }
+
+.music-toggle-container {
+  text-align: center;
+  margin-top: -60px;
+  z-index: 2;
+}
+
+.music-stop-container {
+  text-align: center;
+  margin-top: -60px; /* Аналогично кнопке включения музыки */
+  z-index: 2;
+}
+
+.music-toggle-container .btn-custom {
+  font-size: 18px;
+  width: 200px;
+  margin: 5px auto;
+  display: block;
+  background-color: #ff69b4;
+  color: white;
+  border: none;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* При наведении на кнопку с музыкой */
+.music-toggle-container .btn-custom:hover {
+  background-color: #ff1493;
+  cursor: pointer;
+
+}
+
+.music-toggle-container .btn-custom:focus {
+  outline: none;
+
+}
+
+.music-stop-container .btn-custom {
+  font-size: 18px;
+  width: 200px;
+  margin: 5px auto;
+  display: block;
+  background-color: #ff69b4;
+  color: white;
+  border: none;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.music-stop-container .btn-custom:hover {
+  background-color: #ff1493;
+  cursor: pointer;
+}
+
+.music-stop-container .btn-custom:focus {
+  outline: none;
+}
+
+
+
+
+
+
 
 .panel-custom {
   background-color: #ffb6c1;

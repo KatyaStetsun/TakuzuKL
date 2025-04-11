@@ -17,12 +17,32 @@ ui <- fluidPage(
   uiOutput("choose_ui"),
   uiOutput("rules_ui"),
   uiOutput("game_ui"),
-  uiOutput("victory_ui")
+  uiOutput("victory_ui"),
+
+  tags$audio(id = "audio_menu", src = "audio/menu_music.mp3", type = "audio/mp3", autoplay = FALSE, controls = FALSE),
+  tags$audio(id = "audio_level_easy", src = "audio/level_easy.mp3", type = "audio/mp3", autoplay = FALSE, controls = FALSE),
+  tags$audio(id = "audio_level_medium", src = "audio/level_medium.mp3", type = "audio/mp3", autoplay = FALSE, controls = FALSE),
+  tags$audio(id = "audio_level_hard", src = "audio/level_hard.mp3", type = "audio/mp3", autoplay = FALSE, controls = FALSE)
 )
 
 server <- function(input, output, session) {
 
   game_data <- reactiveValues(grid = NULL, solution = NULL, observed = FALSE)
+
+  stop_all_music <- function() {
+    shinyjs::runjs('
+      var audios = document.querySelectorAll("audio");
+      audios.forEach(function(audio) {
+        audio.pause();
+        audio.currentTime = 0;
+    });
+  ')
+  }
+
+  play_audio <- function(audio_id) {
+    stop_all_music()  # Сначала останавливаем всю музыку
+    shinyjs::runjs(sprintf('document.getElementById("%s").play();', audio_id))
+  }
 
   # Welcome UI
   output$welcome_ui <- renderUI({
@@ -101,6 +121,10 @@ server <- function(input, output, session) {
                 )
               }))
           ),
+          # Music toggle button
+          div(class = "music-toggle-container",
+              actionButton("toggle_music", tags$img(src = "volume-up.png", height = "20px", width = "20px"),class = "btn btn-custom")
+          ),
           div(class = "game-btn-container",
               actionButton("check_solution", "CHECK", class = "btn btn-custom"),
               actionButton("solve_grid", "SOLVE", class = "btn btn-custom"),
@@ -129,6 +153,12 @@ server <- function(input, output, session) {
     shinyjs::hide("choose_ui")
     shinyjs::show("game_ui")
 
+    # Start music when the game starts
+    audio_id <- switch(input$difficulty,
+                       "Easy" = "audio_level_easy",
+                       "Medium" = "audio_level_medium",
+                       "Hard" = "audio_level_hard")
+    play_audio(audio_id)
   })
 
   # Handle Playable Cells
@@ -198,6 +228,28 @@ server <- function(input, output, session) {
   })
 
 
+  # Checking music
+  observeEvent(input$toggle_music, {
+    current_audio <- if (!is.null(game_data$grid)) {
+      switch(input$difficulty,
+             "Easy" = "audio_level_easy",
+             "Medium" = "audio_level_medium",
+             "Hard" = "audio_level_hard")
+    } else {
+      "audio_menu"
+    }
+
+    shinyjs::runjs(sprintf('
+      var audio = document.getElementById("%s");
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    ', current_audio))
+  })
+
+
   # Victory UI
   output$victory_ui <- renderUI({
     req(game_data$grid)
@@ -218,6 +270,7 @@ server <- function(input, output, session) {
 
 
   observeEvent(input$play, {
+    play_audio("audio_menu")
     shinyjs::hide("welcome_ui")
     shinyjs::show("choose_ui")
   })
@@ -230,6 +283,7 @@ server <- function(input, output, session) {
 
 
   observeEvent(input$return, {
+    play_audio("audio_menu")
     shinyjs::hide("choose_ui")
     shinyjs::show("welcome_ui")
   })
@@ -242,18 +296,21 @@ server <- function(input, output, session) {
 
 
   observeEvent(input$return_to_menu_victory, {
+    play_audio("audio_menu")
     shinyjs::hide("victory_ui")
     shinyjs::show("choose_ui")
   })
 
 
   observeEvent(input$return_to_menu, {
+    play_audio("audio_menu")
     shinyjs::hide("game_ui")
     shinyjs::show("choose_ui")
   })
 
 
   observeEvent(input$return_to_menu_modal, {
+    play_audio("audio_menu")
     removeModal()
 
     shinyjs::hide("game_ui")
@@ -263,6 +320,12 @@ server <- function(input, output, session) {
 
   observeEvent(input$exit, {
     stopApp()
+  })
+
+  observe({
+      if (is.null(input$play) || input$play == 0) {
+        play_audio("audio_menu")
+    }
   })
 }
 
