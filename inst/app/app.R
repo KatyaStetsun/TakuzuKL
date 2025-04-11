@@ -8,6 +8,8 @@ if ("grids" %in% ls(envir = .GlobalEnv)) {
  grids <- dl_csv()
 }
 
+# grids <- get_grids()
+
 ui <- fluidPage(
   useShinyjs(),
   tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "styles.css")),
