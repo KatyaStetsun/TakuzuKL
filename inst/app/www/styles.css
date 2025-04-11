@@ -9,6 +9,7 @@ body {
   height: 100vh;
   margin: 0;
 }
+
 .title-img {
   width: 100%;
   max-width: 600px;
@@ -18,9 +19,11 @@ body {
   margin-top: -50px;
   margin-bottom: 20px;
 }
+
 .btn-container {
   text-align: center;
   margin-top: -90px;
+  z-index: 2;
 }
 .btn-custom {
   font-size: 18px;
@@ -41,6 +44,7 @@ body {
 .btn-custom:focus {
   outline: none;
 }
+
 .panel-custom {
   background-color: #ffb6c1;
   padding: 15px;
@@ -50,19 +54,37 @@ body {
   width: 100%;
   margin-bottom: 10px;
 }
+
 .button-container {
   display: flex;
 }
+
 .rules-container {
-  text-align: center;
-  margin-top: 20px;
+  position: absolute;
+  top: 5%;
+  left: 0%;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 1;
 }
 .rules-img {
-  max-width: 80%;
-  height: auto;
+  width: 220%;
+  max-width: 1300px;
   display: block;
-  margin: auto;
+  margin-top: -80px;
+  margin-bottom: -100px;
+  z-index: 0;
 }
+.rules-button {
+  margin-top: 5px;
+  position: relative;
+  z-index: 3;
+}
+
 .game-grid {
   position: absolute;
   top: 20%;
@@ -73,15 +95,13 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 45px;
-  padding: 10px;
 }
 .game-container {
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
+
 .difficulty-img-container {
   position: relative;
   margin-right: 20px;
@@ -91,6 +111,7 @@ body {
   height: 900px;
   object-fit: cover;
 }
+
 .game-btn-container {
   display: flex;
   flex-direction: column;
@@ -98,17 +119,84 @@ body {
   position: relative;
   z-index: 10;
 }
+
 .cell-fixed {
-  background-color: #ADD8E6; /* Light blue */
-  color: white;
+  width: 50px;
+  height: 50px;
+  color: black;
   font-weight: bold;
-  pointer-events: none; /* ⛔ Prevent clicks */
+  border-radius: 10%;
+  border: 1px solid black;
+  pointer-events: none;
 }
 .cell-editable {
-  background-color: #FFDAB9; /* Peach for editable cells */
+  width: 50px;
+  height: 50px;
   color: black;
-  border: 1px solid #999;
+  font-weight: bold;
+  border-radius: 10%;
+  border: 1px solid black;
 }
-.cell-editable:active {
-  background-color: #FFA07A; /* Slightly darker peach when clicked */
+
+.cell-fixed.easy {
+  background-color: #d8687b;
 }
+.cell-editable.easy{
+  background-color: #ff66c4;/*#ffde59*/
+}
+
+.cell-fixed.medium {
+  background-color: #ffbd59;
+}
+.cell-editable.medium {
+  background-color: #fade3f;
+}
+
+.cell-fixed.hard {
+  background-color: #ff3131;
+}
+.cell-editable.hard {
+  background-color: #fbdb30;
+}
+
+.modal-content {
+  background-color: #fff0f5;
+  border-radius: 15px;
+  border: 2px solid #ffb6c1;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.modal-header {
+  background-color: #ffb6c1;
+  color: white;
+  font-weight: bold;
+  border-bottom: none;
+}
+.modal-title {
+  font-size: 24px;
+}
+.modal-body {
+  font-size: 18px;
+  color: #333;
+}
+.modal-footer .btn {
+  background-color: #ff69b4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+}
+.modal-footer .btn:hover {
+  background-color: #ff1493;
+}
+
+.victory-message {
+  font-size: 28px;
+  font-weight: bold;
+  color: #ff1493;
+  margin-top: -30px;
+  margin-bottom: 10 px;
+  z-index: 2;
+  position: relative;
+  text-align: center;
+}
+

@@ -2,7 +2,11 @@ library(shiny)
 library(shinyjs)
 library(TakuzuKL)
 
-#grids <- dl_csv()
+if ("grids" %in% ls(envir = .GlobalEnv)) {
+ get("grids", envir = .GlobalEnv)
+} else {
+ grids <- dl_csv()
+}
 
 ui <- fluidPage(
   useShinyjs(),
@@ -34,8 +38,8 @@ server <- function(input, output, session) {
   output$rules_ui <- renderUI({
     tagList(
       div(class = "rules-container",
-          img(src = "rules.png", class = "rules-img"), # TO TEST
-          actionButton("return_from_rules", "RETURN", class = "btn btn-custom")
+          img(src = "rules.png", class = "rules-img"),
+          actionButton("return_from_rules", "RETURN", class = "btn btn-custom rules-button")
       )
     )
   })
@@ -64,6 +68,11 @@ server <- function(input, output, session) {
 
     n <- nrow(game_data$grid)
 
+    cell_color <- switch(input$difficulty,
+                         "Easy" = "easy",
+                         "Medium" = "medium",
+                         "Hard" = "hard")
+
     tagList(
       div(class = "game-container",
           div(class = "difficulty-img-container",
@@ -75,24 +84,24 @@ server <- function(input, output, session) {
           ),
           div(class = "game-grid",
               do.call(tagList, lapply(1:n, function(i) {
-                div(class = "grid-row",
-                    lapply(1:n, function(j) {
-                      btn_id <- paste0("cell_", i, "_", j)
-                      value <- game_data$grid[i, j]
+                div(lapply(1:n, function(j) {
+                  btn_id <- paste0("cell_", i, "_", j)
+                  value <- game_data$grid[i, j]
 
-                      is_editable <- game_data$original_grid[i, j] == 2
+                  is_editable <- game_data$original_grid[i, j] == 2
 
-                      actionButton(
-                        btn_id,
-                        label = ifelse(value == 2, "", value),
-                        class = ifelse(is_editable, "cell-editable", "cell-fixed")
-                      )
-                    })
+                  actionButton(
+                    btn_id,
+                    label = ifelse(value == 2, "", value),
+                    class = ifelse(is_editable, paste0("cell-editable ", cell_color), paste0("cell-fixed ", cell_color))
+                  )
+                })
                 )
               }))
           ),
           div(class = "game-btn-container",
               actionButton("check_solution", "CHECK", class = "btn btn-custom"),
+              actionButton("solve_grid", "SOLVE", class = "btn btn-custom"),
               actionButton("return_to_menu", "QUIT", class = "btn btn-custom")
           )
       )
@@ -102,20 +111,22 @@ server <- function(input, output, session) {
 
   # Handle Game Start
   observeEvent(input$start_game, {
+
     grid_size <- as.integer(strsplit(input$board_size, "x")[[1]][1])
     grid_name <- paste0("grids_", grid_size)
     chosen_grid <- as.matrix(sample(grids[[grid_name]], 1)[[1]])
 
     game_data$solution <- chosen_grid
     difficulty_level <- switch(input$difficulty,
-                               "Easy" = 1,
-                               "Medium" = 2,
-                               "Hard" = 3)
+                               "Easy" = 0.25,
+                               "Medium" = 0.5,
+                               "Hard" = 0.75)
     game_data$grid <- hide_by_difficulty(difficulty_level, chosen_grid)
     game_data$original_grid <- game_data$grid
 
     shinyjs::hide("choose_ui")
     shinyjs::show("game_ui")
+
   })
 
   # Handle Playable Cells
@@ -163,23 +174,39 @@ server <- function(input, output, session) {
     } else {
       showModal(modalDialog(
         title = "Incorrect",
-        "The grid is not solved correctly. Keep trying!",
-        easyClose = TRUE
+        "The grid is not solved correctly. Keep trying!"
       ))
     }
   })
+
+  # Share Solution
+  observeEvent(input$solve_grid, {
+    req(game_data$grid, game_data$solution)
+
+    game_data$grid <- game_data$solution
+
+    showModal(modalDialog(
+      title = "Nice try",
+      "Let's try another one!",
+      easyClose = TRUE,
+      footer = tagList(
+        actionButton("return_to_menu_modal", "RETURN TO MENU")
+      )
+    ))
+  })
+
 
   # Victory UI
   output$victory_ui <- renderUI({
     req(game_data$grid)
     tagList(
-      div(class = "victory-message",
-          h3("Congratulations! You solved the puzzle!"),
-          actionButton("return_to_menu_victory", "RETURN TO MENU", class = "btn btn-custom")
+      div(class = "rules-container",
+          img(src = "victory.png", class = "rules-img"),
+          div("Congratulations! You solved the puzzle!", class = "victory-message"),
+          actionButton("return_to_menu_victory", "RETURN TO MENU", class = "btn btn-custom rules-button")
       )
     )
   })
-
 
   # Handle UI Navigation
   shinyjs::hide("choose_ui")
@@ -219,6 +246,14 @@ server <- function(input, output, session) {
 
 
   observeEvent(input$return_to_menu, {
+    shinyjs::hide("game_ui")
+    shinyjs::show("choose_ui")
+  })
+
+
+  observeEvent(input$return_to_menu_modal, {
+    removeModal()
+
     shinyjs::hide("game_ui")
     shinyjs::show("choose_ui")
   })
