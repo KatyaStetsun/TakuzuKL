@@ -1,4 +1,4 @@
-<img src="www/title.png" 
+<img src="inst/app/www/title.png" 
         alt="Title" 
         width="900" 
         height="500" 
