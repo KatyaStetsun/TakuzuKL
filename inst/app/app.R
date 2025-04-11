@@ -2,11 +2,7 @@ library(shiny)
 library(shinyjs)
 library(TakuzuKL)
 
-# if ("grids" %in% ls(envir = .GlobalEnv)) {
-#  get("grids", envir = .GlobalEnv)
-# } else {
-#  grids <- dl_csv()
-# }
+# if ("grids" %in% ls(envir = .GlobalEnv)) {get("grids", envir = .GlobalEnv)} else {grids <- dl_csv()}
 
 grids <- get_grids()
 
@@ -42,19 +38,16 @@ server <- function(input, output, session) {
   }
 
   play_audio <- function(audio_id) {
-    # Получаем список всех аудио элементов
     shinyjs::runjs(sprintf('
-    // Останавливаем все аудио элементы
     var audios = document.querySelectorAll("audio");
     audios.forEach(function(audio) {
       audio.pause();
       audio.currentTime = 0;
     });
 
-    // Запускаем только нужный аудио элемент
     var targetAudio = document.getElementById("%s");
     if (targetAudio) {
-      targetAudio.currentTime = 0; // Перематываем в начало
+      targetAudio.currentTime = 0;
       targetAudio.play();
     }
   ', audio_id))
@@ -63,7 +56,7 @@ server <- function(input, output, session) {
   # Welcome UI
   output$welcome_ui <- renderUI({
     tagList(
-      img(src = "title.png", class = "title-img"),
+      img(src = "title_1.png", class = "title-img"),
       div(class = "btn-container",
           actionButton("play", "PLAY", class = "btn btn-custom"),
           actionButton("how_to_play", "HOW TO PLAY?", class = "btn btn-custom"),
@@ -233,8 +226,8 @@ server <- function(input, output, session) {
     req(game_data$grid, game_data$solution)
 
     if (all(game_data$grid == game_data$solution)) {
-# Фиксируем итоговое время
-      secs <- as.numeric(difftime(Sys.time(), game_data$start_time, units = "secs"))
+
+      secs <- as.numeric(difftime(Sys.time(), game_data$start_time, units = "secs"))   #record the final time
       game_data$final_time <- paste0(
         formatC(secs %/% 60, width = 2, flag = "0"),
         ":",
