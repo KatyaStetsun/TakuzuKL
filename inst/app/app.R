@@ -2,13 +2,13 @@ library(shiny)
 library(shinyjs)
 library(TakuzuKL)
 
-if ("grids" %in% ls(envir = .GlobalEnv)) {
- get("grids", envir = .GlobalEnv)
-} else {
- grids <- dl_csv()
-}
+# if ("grids" %in% ls(envir = .GlobalEnv)) {
+#  get("grids", envir = .GlobalEnv)
+# } else {
+#  grids <- dl_csv()
+# }
 
-# grids <- get_grids()
+grids <- get_grids()
 
 ui <- fluidPage(
   useShinyjs(),
@@ -20,6 +20,7 @@ ui <- fluidPage(
   uiOutput("victory_ui"),
 
   tags$audio(id = "audio_menu", src = "audio/menu_music.mp3", type = "audio/mp3", autoplay = FALSE, controls = FALSE),
+  tags$audio(id = "audio_victory", src = "audio/victory.mp3", type = "audio/mp3", autoplay = FALSE, controls = FALSE),
   tags$audio(id = "audio_level_easy", src = "audio/level_easy.mp3", type = "audio/mp3", autoplay = FALSE, controls = FALSE),
   tags$audio(id = "audio_level_medium", src = "audio/level_medium.mp3", type = "audio/mp3", autoplay = FALSE, controls = FALSE),
   tags$audio(id = "audio_level_hard", src = "audio/level_hard.mp3", type = "audio/mp3", autoplay = FALSE, controls = FALSE)
@@ -27,7 +28,8 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
 
-  game_data <- reactiveValues(grid = NULL, solution = NULL, observed = FALSE)
+  game_data <- reactiveValues(grid = NULL, solution = NULL, observed = FALSE,
+                              start_time = NULL, timer_active = FALSE, final_time = "00:00")
 
   stop_all_music <- function() {
     shinyjs::runjs('
@@ -40,8 +42,22 @@ server <- function(input, output, session) {
   }
 
   play_audio <- function(audio_id) {
-    stop_all_music()  # Сначала останавливаем всю музыку
-    shinyjs::runjs(sprintf('document.getElementById("%s").play();', audio_id))
+    # Получаем список всех аудио элементов
+    shinyjs::runjs(sprintf('
+    // Останавливаем все аудио элементы
+    var audios = document.querySelectorAll("audio");
+    audios.forEach(function(audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    });
+
+    // Запускаем только нужный аудио элемент
+    var targetAudio = document.getElementById("%s");
+    if (targetAudio) {
+      targetAudio.currentTime = 0; // Перематываем в начало
+      targetAudio.play();
+    }
+  ', audio_id))
   }
 
   # Welcome UI
@@ -84,6 +100,18 @@ server <- function(input, output, session) {
     )
   })
 
+
+ # Game timer
+
+  output$game_timer <- renderText({
+    if (isTRUE(game_data$timer_active) && !is.null(game_data$start_time)) {
+      invalidateLater(1000)
+      format(.POSIXct(difftime(Sys.time(), game_data$start_time, units = "secs"), tz = "GMT"), "%M:%S")
+    } else {
+      "00:00"
+    }
+  })
+
   # Game UI
   output$game_ui <- renderUI({
     req(game_data$grid)
@@ -121,11 +149,12 @@ server <- function(input, output, session) {
                 )
               }))
           ),
-          # Music toggle button
-          div(class = "music-toggle-container",
-              actionButton("toggle_music", tags$img(src = "volume-up.png", height = "20px", width = "20px"),class = "btn btn-custom")
-          ),
-          div(class = "game-btn-container",
+
+          div(class = "game-controls-container",
+              div(class = "game-timer", textOutput("game_timer")),
+              actionButton("toggle_music",
+                           tags$img(src = "volume-up.png", height = "20px", width = "20px"),
+                           class = "btn btn-custom"),
               actionButton("check_solution", "CHECK", class = "btn btn-custom"),
               actionButton("solve_grid", "SOLVE", class = "btn btn-custom"),
               actionButton("return_to_menu", "QUIT", class = "btn btn-custom")
@@ -137,6 +166,9 @@ server <- function(input, output, session) {
 
   # Handle Game Start
   observeEvent(input$start_game, {
+
+    game_data$start_time <- Sys.time()
+    game_data$timer_active <- TRUE
 
     grid_size <- as.integer(strsplit(input$board_size, "x")[[1]][1])
     grid_name <- paste0("grids_", grid_size)
@@ -201,6 +233,17 @@ server <- function(input, output, session) {
     req(game_data$grid, game_data$solution)
 
     if (all(game_data$grid == game_data$solution)) {
+# Фиксируем итоговое время
+      secs <- as.numeric(difftime(Sys.time(), game_data$start_time, units = "secs"))
+      game_data$final_time <- paste0(
+        formatC(secs %/% 60, width = 2, flag = "0"),
+        ":",
+        formatC(secs %% 60, width = 2, flag = "0")
+      )
+      game_data$timer_active <- FALSE
+
+      play_audio("audio_victory")
+
       shinyjs::hide("game_ui")
       shinyjs::show("victory_ui")
     } else {
@@ -256,7 +299,12 @@ server <- function(input, output, session) {
     tagList(
       div(class = "rules-container",
           img(src = "victory.png", class = "rules-img"),
-          div("Congratulations! You solved the puzzle!", class = "victory-message"),
+          div(
+            HTML(paste0(
+            "Congratulations!<br>",
+            "You solved the puzzle in ", game_data$final_time, "!<br><br>")),
+            class = "victory-message"
+          ),
           actionButton("return_to_menu_victory", "RETURN TO MENU", class = "btn btn-custom rules-button")
       )
     )
@@ -274,7 +322,6 @@ server <- function(input, output, session) {
     shinyjs::hide("welcome_ui")
     shinyjs::show("choose_ui")
   })
-
 
   observeEvent(input$how_to_play, {
     shinyjs::hide("welcome_ui")
@@ -299,6 +346,7 @@ server <- function(input, output, session) {
     play_audio("audio_menu")
     shinyjs::hide("victory_ui")
     shinyjs::show("choose_ui")
+    game_data$timer_active <- FALSE
   })
 
 
@@ -306,6 +354,7 @@ server <- function(input, output, session) {
     play_audio("audio_menu")
     shinyjs::hide("game_ui")
     shinyjs::show("choose_ui")
+    game_data$timer_active <- FALSE
   })
 
 
