@@ -2,12 +2,12 @@
 # Check if there are already loaded grids in the package environment
 if (!exists("takuzu_grids", envir = asNamespace(pkgname))) {
 # Load grids via dl_csv()
-grids <- dl_csv() # Your function from dl_csv.R
+grids <- dl_csv()
 
 # Save them in the hidden package environment
 assign("takuzu_grids", grids, envir = asNamespace(pkgname))
 
-# Optional: cache on disk for future sessions
+# Cache on disk for future sessions
 cache_dir <- tools::R_user_dir("TakuzuKL", which = "cache")
 if (!dir.exists(cache_dir)) dir.create(cache_dir, recursive = TRUE)
 saveRDS(grids, file.path(cache_dir, "grids_cache.rds"))

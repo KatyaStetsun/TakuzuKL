@@ -4,9 +4,9 @@
 #' @export
 library(readr)
 dl_csv <- function(){
-  grids_4 <- as.matrix(read_csv("https://zenodo.org/records/15037448/files/valid_grid_4x4.csv?download=1", col_names = FALSE))
-  grids_6 <- as.matrix(read_csv("https://zenodo.org/records/15037448/files/valid_grid_6x6.csv?download=1", col_names = FALSE))
-  grids_8 <- as.matrix(read_csv("https://zenodo.org/records/15037448/files/valid_grid_8x8.csv?download=1", col_names = FALSE))
+  grids_4 <- as.matrix(readr::read_csv("https://zenodo.org/records/15037448/files/valid_grid_4x4.csv?download=1", col_names = FALSE))
+  grids_6 <- as.matrix(readr::read_csv("https://zenodo.org/records/15037448/files/valid_grid_6x6.csv?download=1", col_names = FALSE))
+  grids_8 <- as.matrix(readr::read_csv("https://zenodo.org/records/15037448/files/valid_grid_8x8.csv?download=1", col_names = FALSE))
 
   all_grids <- list()
 

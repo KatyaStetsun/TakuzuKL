@@ -1,6 +1,6 @@
 Package: TakuzuKL
 Title: A Shiny App for Takuzu Game
-Version: 0.1.0
+Version: 1.0.0
 Authors@R: c(
     person(given = "Kateryna", family = "STETSUN", 
            email = "kateryna.stetsun@etu.umontpellier.fr", 
