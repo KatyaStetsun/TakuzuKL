@@ -17,11 +17,37 @@ The rules are as follows:
 - You must have the same count of *1*s and *0*s in each column and each row (eg. in a 6x6 game, there are three *1*s and three *0*s);
 - You can't have the same column or the same row twice.
 
-We hope you enjoy your time playing this pink lolita themed Takuzu game as much as we enjoyed creating it!
+***We hope you enjoy your time playing this pink lolita-themed Takuzu game as much as we enjoyed creating it!***
 
 ---
 
-## ⚙️ Requirements
+## 🚀 How to launch the app
+
+To get started with the Takuzu game, follow the steps below:
+
+### 1️⃣ Clone the repository
+
+If you have Git installed, you can clone the repository directly from GitHub:
+
+```bash
+git clone https://github.com/KatyaStetsun/Takuzu_game.git
+```
+
+Alternatively, click the green **Code** button on the GitHub page and choose **Download ZIP**, then extract it to a local folder.
+
+### 2️⃣ Install R and RStudio
+
+If not, you can download them here:
+
+- 📥 [Download R (Windows/macOS/Linux)](https://cran.r-project.org/)
+- 🖥️ [Download RStudio (Windows/macOS/Ubuntu)](https://posit.co/download/rstudio-desktop/)
+
+### 3️⃣ Open the project in RStudio
+
+- Launch RStudio.
+- Open the project folder, or open the ``` TakuzuKL.Rproj ``` file inside it.
+
+### 4️⃣ Install required packages
 
 To run the application in your **R** based IDE, you will need some packages:
 ```r
@@ -32,6 +58,18 @@ install.packages(c('shiny', 'shinyjs', 'Rcpp'))
 ***ShinyJS*** has a number of useful features that can be combined with Shiny. We use this package to display each user interface at different times.
 
 ***Rcpp*** lets us write *C++* functions directly in our R project, making the logic part of the game much faster and a little more aesthetically pleasing.
+
+These will also be installed automatically if you run ```devtools::load_all()``` or open the app as a package.
+
+### 5️⃣ Launch the application
+
+Once all packages are installed, you can launch the game using:
+
+```r
+TakuzuKL::runTakuzuApp()
+```
+
+***Then you're all set to enjoy the game!***
 
 ---
 
