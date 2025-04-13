@@ -1,3 +1,6 @@
+#' @title Difficulty Level setup
+#' @description Hides cells in the Takuzu grid based on the specified difficulty level.
+#' 
 #' @export
 hide_by_difficulty <- function(lvl, grid){
   stopifnot(lvl >= 0 && lvl <= 0.8)  # Protection against incorrect values

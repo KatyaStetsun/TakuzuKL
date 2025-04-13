@@ -1,6 +1,5 @@
-#' Run the Takuzu Shiny App
-#'
-#' This function launches the Shiny app included in the TakuzuKL package.
+#' @title Run the Takuzu Shiny App
+#' @description This function launches the Shiny app included in the TakuzuKL package.
 #'
 #' @export
 runTakuzuApp <- function() {
