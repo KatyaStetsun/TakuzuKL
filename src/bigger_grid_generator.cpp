@@ -7,13 +7,15 @@
 using namespace Rcpp;
 using namespace std;
 
-// same function as in grid_generator.cpp
-// faster than #include "grid_generator.h"
+// Third step: Create valid grids of size 8 using valid 4x4 grids.
+
+// This is the same function as in grid_generator.cpp (it's faster than #include "grid_generator.h" this way):
 bool isValidBiggerGrid(const vector<vector<int>>& grid, int size) {
   if (grid.size() < size) {
     return true;
   }
 
+  // set counters for 1s and 0s
   for (int col = 0; col < size; col++) {
     int zeros = 0, ones = 0;
     for (int row = 0; row < size; row++) {
@@ -69,13 +71,14 @@ bool isValidBiggerGrid(const vector<vector<int>>& grid, int size) {
 }
 
 
+// Function that will read the grids from the file 'valid_grid_4x4.csv':
 vector<vector<vector<int>>> readGridsFromFile(const string& filename) {
-  ifstream infile(filename);
+  ifstream infile(filename);     // Input file stream
   string line;
-  vector<vector<vector<int>>> grids;
+  vector<vector<vector<int>>> grids;      // Tensor of dimensions 4x4x{number of available grids}
   vector<vector<int>> currentGrid;
 
-  while (getline(infile, line)) {
+  while (getline(infile, line)) {    // Read file line by line
     if (line.empty()) {
       if (!currentGrid.empty()) {
         grids.push_back(currentGrid);
@@ -108,6 +111,7 @@ vector<vector<vector<int>>> readGridsFromFile(const string& filename) {
 
   infile.close();
 
+  // Debugging Rcouts:
   Rcout << "Total valid 4x4 grids read: " << grids.size() << "\n";
   for (const auto& grid : grids) {
     Rcout << "Read grid:\n";
@@ -124,6 +128,7 @@ vector<vector<vector<int>>> readGridsFromFile(const string& filename) {
 }
 
 
+// Void function that generates all the grids of size 8 by combining 4 valid grids of size 4:
 void generateBiggerGrids(vector<vector<vector<int>>>& validGrids, vector<vector<vector<int>>>& validBiggerGrids) {
   int n = validGrids.size();
 
@@ -171,6 +176,7 @@ void generateBiggerGrids(vector<vector<vector<int>>>& validGrids, vector<vector<
 }
 
 
+// This is the same function as in grid_generator.cpp:
 void saveBiggerGridsToFile(const vector<vector<vector<int>>>& grids, int size, const string& output_dir) {
   string filename = output_dir + "/valid_grid_" + to_string(size) + "x" + to_string(size) + ".csv";
   ofstream outfile(filename);
@@ -196,7 +202,8 @@ void saveBiggerGridsToFile(const vector<vector<vector<int>>>& grids, int size, c
 }
 
 
-void generateBiggerGrids(const string& input_file, const string& output_dir) {
+// Void function that checks all the 8x8 grids generated and saves them:
+void generateValidBiggerGrids(const string& input_file, const string& output_dir) {
   vector<vector<vector<int>>> validGrids = readGridsFromFile(input_file);
 
   if (validGrids.empty()) {
@@ -214,5 +221,5 @@ void generateBiggerGrids(const string& input_file, const string& output_dir) {
 
 
 /*** R
-#generateBiggerGrids("src/valid_grid_4x4.csv", "src")
+#generateValidBiggerGrids("src/valid_grid_4x4.csv", "src")
 */
