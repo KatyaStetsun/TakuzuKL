@@ -6,10 +6,6 @@
 \usage{
 get_grids()
 }
-\value{
-A list of Takuzu grids.
-}
 \description{
-Returns the Takuzu grids, loading them from cache or
-             downloading them on first use.
+This function retrieves the preloaded set of Takuzu grids
 }
