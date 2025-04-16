@@ -1,0 +1,10 @@
+name: takuzu_app
+title: takuzu_app
+username: ssdm1
+account: ssdm1
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 14539907
+bundleId:
+url: https://ssdm1.shinyapps.io/takuzu_app/
+version: 1

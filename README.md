@@ -65,7 +65,7 @@ If not, you can download them here:
 
 To run the application in your **R** based IDE, you will need some packages:
 ```r
-install.packages(c('shiny', 'shinyjs', 'Rcpp', 'readr))
+install.packages(c('shiny', 'shinyjs', 'Rcpp', 'readr'))
 ```
 ***Shiny*** represents the entire basis of this project. It allows us to create various UIs (User Interfaces) and render them in a single reactive/responsive server.
 
@@ -75,7 +75,7 @@ install.packages(c('shiny', 'shinyjs', 'Rcpp', 'readr))
 
 ***ReadR*** is a tool to read *.csv* files, like the ones we hosted on [Zenodo](https://zenodo.org/records/15037448).
 
-These will also be installed automatically if you run ```devtools::load_all()``` or open the app as a package.
+These will also be installed automatically if you run ```devtools::load_all()``` (for this option be sure to used ```install.packages('devtools')``` before) or open the app as a package.
 
 ### 5️⃣ Launch the application
 
