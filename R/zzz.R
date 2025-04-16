@@ -1,25 +1,31 @@
 .onLoad <- function(libname, pkgname) {
-
-# Checking if there are already loaded grids in the package environment
-  if (!exists("takuzu_grids", envir = asNamespace(pkgname))) {
-
-    grids <- dl_csv()  # load grids via dl_csv()
-
-# save them in the hidden package environment
-    assign("takuzu_grids", grids, envir = asNamespace(pkgname))
-
-# cache on disk for future sessions
-    cache_dir <- tools::R_user_dir("TakuzuKL", which = "cache")
-    if (!dir.exists(cache_dir)) dir.create(cache_dir, recursive = TRUE)
-    saveRDS(grids, file.path(cache_dir, "grids_cache.rds"))
+  cache_dir <- tools::R_user_dir("TakuzuKL", which = "cache")
+  if (!dir.exists(cache_dir)) {
+    dir.create(cache_dir, recursive = TRUE)
   }
 }
 
-
 #' @title Get Preloaded Takuzu Grids
-#' @description This function retrieves the preloaded set of Takuzu grids
-#'
+#' @description Returns the Takuzu grids, loading them from cache or
+#'              downloading them on first use.
+#' @return A list of Takuzu grids.
 #' @export
 get_grids <- function() {
-get("takuzu_grids", envir = asNamespace("TakuzuKL"))
+  pkgenv <- asNamespace("TakuzuKL")
+  cache_file <- file.path(tools::R_user_dir("TakuzuKL", "cache"),
+                          "grids_cache.rds")
+
+  if (exists("takuzu_grids", envir = pkgenv)) {
+    return(get("takuzu_grids", envir = pkgenv))
+  }
+
+  if (file.exists(cache_file)) {
+    grids <- readRDS(cache_file)
+  } else {
+    grids <- dl_csv()
+    saveRDS(grids, cache_file)
+  }
+
+  assign("takuzu_grids", grids, envir = pkgenv)
+  grids
 }
