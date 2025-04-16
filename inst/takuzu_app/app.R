@@ -2,8 +2,6 @@ library(shiny)
 library(shinyjs)
 library(TakuzuKL)
 
-# if ("grids" %in% ls(envir = .GlobalEnv)) {get("grids", envir = .GlobalEnv)} else {grids <- dl_csv()}
-
 grids <- get_grids()
 
 ui <- fluidPage(

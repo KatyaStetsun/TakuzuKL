@@ -12,6 +12,6 @@ Description: A Shiny app to play the Takuzu game, developed as part of a univers
 License: MIT + file LICENSE
 Encoding: UTF-8
 Depends: R (>= 3.5.0)
-Imports: shiny, shinyjs, shinyTimer, Rcpp, readr, testthat
+Imports: shiny, shinyjs, Rcpp, readr, testthat
 LinkingTo: Rcpp
 RoxygenNote: 7.3.2
