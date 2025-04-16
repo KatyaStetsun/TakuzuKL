@@ -10,7 +10,7 @@ We're in first year of a **Master**'s program and we're creating a Takuzu game i
 
 ## 🕹️ Game rules
 
-Takuzu and Sudoku are somewhat similar: numbers into a grid, , but this time you'll only come across *1*s and *0*s, in 4x4, 6x6 or 8x8 grids!
+Takuzu and Sudoku are somewhat similar: numbers into a grid, but this time you'll only come across *1*s and *0*s, in 4x4, 6x6 or 8x8 grids!
 
 The rules are as follows:
 - You can't have more than two *1*s (respectively *0*s) following, vertically and horizontally;
@@ -18,6 +18,20 @@ The rules are as follows:
 - You can't have the same column or the same row twice.
 
 ***We hope you enjoy your time playing this pink lolita-themed Takuzu game as much as we enjoyed creating it!***
+
+---
+
+## 😉 Tips
+
+We only wish you the best experience while playing our precious game, you might want to follow these few tips:
+- Lower your volume before lauching the app, there are various copyright-free musics playing depending on the difficulty level;
+- Go full screen for immersion;
+- Carefully read the rules, either above up here or within the in-game user interface.
+
+There are three distinct difficulty level:
+- "Easy" that hids 1/4 of the grid cells;
+- "Medium" that hids 1/2 of the grid cells;
+- "Hard" that hids 3/4 of the grid cells.
 
 ---
 
@@ -51,13 +65,15 @@ If not, you can download them here:
 
 To run the application in your **R** based IDE, you will need some packages:
 ```r
-install.packages(c('shiny', 'shinyjs', 'Rcpp'))
+install.packages(c('shiny', 'shinyjs', 'Rcpp', 'readr))
 ```
 ***Shiny*** represents the entire basis of this project. It allows us to create various UIs (User Interfaces) and render them in a single reactive/responsive server.
 
 ***ShinyJS*** has a number of useful features that can be combined with Shiny. We use this package to display each user interface at different times.
 
 ***Rcpp*** lets us write *C++* functions directly in our R project, making the logic part of the game much faster and a little more aesthetically pleasing.
+
+***ReadR*** is a tool to read *.csv* files, like the ones we hosted on [Zenodo](https://zenodo.org/records/15037448).
 
 These will also be installed automatically if you run ```devtools::load_all()``` or open the app as a package.
 
