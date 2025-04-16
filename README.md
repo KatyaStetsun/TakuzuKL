@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="inst/app/www/title_1.png" alt="Title" width="400" height="300" />
+  <img src="inst/takuzu_app/www/title_1.png" alt="Title" width="400" height="300" />
 </div>
 
 Welcome to our second-semester R project!
