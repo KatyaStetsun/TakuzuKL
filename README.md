@@ -24,6 +24,7 @@ The rules are as follows:
 ## 😉 Tips
 
 We only wish you the best experience while playing our precious game, you might want to follow these few tips:
+- A connection to Internet might be required;
 - Lower your volume before lauching the app, there are various copyright-free musics playing depending on the difficulty level;
 - Go full screen for immersion;
 - Carefully read the rules, either above up here or within the in-game user interface.
