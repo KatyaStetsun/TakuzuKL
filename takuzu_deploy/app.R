@@ -266,7 +266,7 @@ server <- function(input, output, session) {
             HTML(paste0(
               # Add a message with the recorded timer:
               "Congratulations!<br>",
-              "You solved the puzzle in", game_data$final_time, "!<br><br>")),
+              "You solved the puzzle in ", game_data$final_time, " !<br><br>")),
             class = "victory-message"
           ),
           # Add an action button for navigation:
