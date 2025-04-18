@@ -38,7 +38,7 @@ There are three distinct difficulty level:
 
 ## 🎮 Want to try before you dive in?
 
-You can test out the online demo version of our game [HERE](https://ssdm1.shinyapps.io/TakuzuKL/). 
+You can test out the online [demo version](https://ssdm1.shinyapps.io/TakuzuKL/) of our game. 
 
 *P.S. this version doesn't have music and only include 4x4 grid!*
 
