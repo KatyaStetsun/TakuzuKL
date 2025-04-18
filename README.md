@@ -36,6 +36,14 @@ There are three distinct difficulty level:
 
 ---
 
+## 🎮 Want to try before you dive in?
+
+You can test out the online demo version of our game [HERE](https://ssdm1.shinyapps.io/TakuzuKL/). 
+
+*P.S. this version doesn't have music and only include 4x4 grid!*
+
+---
+
 ## 🚀 How to launch the app
 
 To get started with the Takuzu game, follow the steps below:
@@ -87,6 +95,10 @@ TakuzuKL::runTakuzuApp()
 ```
 
 ***Then you're all set to enjoy the game!***
+
+P.S. Our package also includes a folder called ```takuzu_deploy```, which was used to deploy the our online demo version you could see earlier. So, if you're feeling adventurous, you can easily reproduce the deployment process yourself!
+
+To learn how to deploy an app on [ShinyApps.io](https://www.shinyapps.io/), check out this guide → [HERE](https://shiny.posit.co/r/articles/share/shinyapps/).
 
 ---
 
